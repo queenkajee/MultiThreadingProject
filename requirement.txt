@@ -1,0 +1,6 @@
+มี server socket client
+multithread
+UI
+00000000
+2706200116021986
+/Users/queenkajee/Documents/CN311Project
