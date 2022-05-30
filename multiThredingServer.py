@@ -49,15 +49,16 @@ def goodDay(date):
 	personDate1 = 0
 	personDate2 = 0
 	datePow = 0
-	for i in date[0:8]:
-		personDate1 += int(i)
-	for i in date[9:-1]:
-		personDate2 += int(i)
+	with concurrent.futures.ThreadPoolExecutor() as executor:
+	    future1 = executor.submit(people1, date)
+	    future2 = executor.submit(people2,date)
+	    return_value1 = future1.result()
+	    return_value2 = future2.result()
 	dateNow = str(datetime.today().strftime('%d%m%Y'))
 	for i in dateNow[0:8]:
 		datePow += int(i)
-	score1 = personDate1 - datePow
-	score2 = personDate2 - datePow
+	score1 = return_value1 - datePow
+	score2 = return_value2 - datePow
 	if score1 > 0 :
 		txtSend = "Today is a good day for you" + txtSend
 	elif score1 == 0:
@@ -97,7 +98,6 @@ def Horar(date) :
 	    return_value1 = future1.result()
 	    return_value2 = future2.result()
 	sumValue = return_value1 + return_value2
-	print(sumValue)
 
 	if(sumValue)>10 :
 		data = b"Good relationship :D"
