@@ -12,7 +12,7 @@ def serverTCP(person):
 	host = '127.0.0.1'
 
 	# Define the port on which you want to connect
-	port = 10045
+	port = 10046
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	# connect to server on local computer
 	s.connect((host,port))
@@ -48,6 +48,9 @@ def serverTCP(person):
 
 	# close the connection
 	s.close()
+	lastRespondText = "End of the program"
+	showTxt = tk.Label(app,text=lastRespondText)
+	showTxt.pack()
 
 def clickButton1(personData):
 	personData = str(personData)

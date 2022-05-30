@@ -3,6 +3,8 @@ import socket
 
 # import thread module
 from threading import Thread
+import concurrent.futures
+from multiprocessing.pool import ThreadPool
 
 #inport date module
 from datetime import datetime
@@ -73,19 +75,28 @@ def goodDay(date):
 
 
 
-
-
-def Horar(date) :
+def people1(date):
 	first = 0
-	second = 0
 	for i in date[0:8] :
 		first += int(i)
 		first = first%10 + first//10
+	return first
 
+def people2(date):
+	second = 0
 	for i in date[8:16] :
 		second += int(i)
 		second = second%10 + second//10
-	sumValue = first + second
+	return second
+
+
+def Horar(date) :
+	with concurrent.futures.ThreadPoolExecutor() as executor:
+	    future1 = executor.submit(people1, date)
+	    future2 = executor.submit(people2,date)
+	    return_value1 = future1.result()
+	    return_value2 = future2.result()
+	sumValue = return_value1 + return_value2
 	print(sumValue)
 
 	if(sumValue)>10 :
@@ -126,7 +137,7 @@ def Main():
 
 	# reverse a port on your computer
 	# can be anything
-	port = 10045
+	port = 10046
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((host, port))
 	print("socket binded to port", port)
