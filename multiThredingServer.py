@@ -64,6 +64,7 @@ def goodDay(date):
 	personDate1 = 0
 	personDate2 = 0
 	datePow = 0
+	
 	#make thread return result by using thread pool
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 	    future1 = executor.submit(people1, date)
