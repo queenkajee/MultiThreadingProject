@@ -7,7 +7,23 @@ import tkinter as tk
 
 app = tk.Tk()
 
-def serverTCP(person,promoCode):
+def serverTCP2():
+	# local host IP '192.168.0.101'
+	host = '192.168.0.101'
+
+	# Define the port on which you want to connect
+	port = 10048
+	s1 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+	# connect to server on local computer
+	s1.connect((host,port))
+	# message received from server
+	promoCode = s1.recv(1024)
+	# print the received message
+	serverTextPromo =promoCode.decode('ascii')
+	resultsShowPromo = tk.Label(app,text=serverTextPromo)
+	resultsShowPromo.pack()
+
+def serverTCP1(person):
 	# local host IP '127.0.0.1'
 	host = '127.0.0.1'
 
@@ -17,14 +33,10 @@ def serverTCP(person,promoCode):
 	# connect to server on local computer
 	s.connect((host,port))
 	# message you send to server
-	message = person
-
-
-
+	message = person+promoCode
 
 	# message sent to server
 	s.sendall(message.encode('ascii'))
-	s.sendall(promoCode.encode('ascii'))
 
 	# message received from server
 	data1 = s.recv(1024)
@@ -55,10 +67,13 @@ def serverTCP(person,promoCode):
 	showTxt = tk.Label(app,text=lastRespondText)
 	showTxt.pack()
 
-def clickButton1(personData,promoCode):
+def clickButton1(personData):
+	print(personData)
 	personData = str(personData)
 	promoCode = str(promoCode)
-	serverTCP(personData,promoCode)
+	serverTCP1(personData)
+def clickButton2()
+	serverTCP2()
 def Main():
 
 	app.geometry("1000x500")
@@ -66,14 +81,13 @@ def Main():
 	instruct1 = tk.Label(app,text="""Plase enter your birthday and then follow by your parter's birthday\n
 	with this form\n0000000000000000\nfirst 8 digit please enter your birthday and follow by yourparter's birthday""")
 	instruct1.pack()
-	p1 = tk.Entry()
+	p1 = tk.Entry(app)
 	p1.pack()
 	instruct2 = tk.Label(app,text="""For enter Promotion code""")
 	instruct2.pack()
-	p2 = tk.Entry()
-	p2.pack()
-	button1 = tk.Button(app, text="Click to proceed",command=lambda:clickButton1(p1.get(),p2.get()))
+	button1 = tk.Button(app, text="Click to proceed",command=lambda:clickButton1(p1.get()))
 	button1.pack()
+	button2 = tk.Button(app,text="Click to get promocode and get further info",command=lambda:clickButton2())
 	app.mainloop()
 
 
