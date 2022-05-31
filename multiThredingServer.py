@@ -64,6 +64,7 @@ def goodDay(date):
 	personDate1 = 0
 	personDate2 = 0
 	datePow = 0
+
 	#make thread return result by using thread pool
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 	    future1 = executor.submit(people1, date)
@@ -139,7 +140,7 @@ def Main():
 
 	# reverse a port on your computer
 	# can be anything
-	port = 10046
+	port = 2000
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((host, port))
 	print("socket binded to port", port)
@@ -170,6 +171,8 @@ def Main():
 	t1.join()
 	t2.join()
 	t3.join()
+
+	s.close()
 
 
 if __name__ == '__main__':
