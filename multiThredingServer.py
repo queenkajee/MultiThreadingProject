@@ -42,8 +42,8 @@ def suggestFood(date):
 
 	return bytes(sugFood, 'ascii')
 
-def goodDay(date):
-	txtSend="\n"
+def goodDay(date,promoCode):
+	txtSend=""
 	personDate1 = 0
 	personDate2 = 0
 	datePow = 0
@@ -57,17 +57,20 @@ def goodDay(date):
 	score1 = personDate1 - datePow
 	score2 = personDate2 - datePow
 	if score1 > 0 :
-		txtSend = "Today is a good day for you" + txtSend
+		txtSend = txtSend+"Today is a good day for you\n"
 	elif score1 == 0:
-		txtSend = "Today is a nor good or bad day for you" + txtSend
+		txtSend = txtSend+"Today is a nor good or bad day for you\n"
 	else:
-		txtSend = "Today is a not your day, " + txtSend
-	if score2 > 0 :
-		txtSend = "Today is a good day for yor parter " + txtSend
-	elif score2 == 0:
-		txtSend = "Today is a nor good or bad day for yor parter, " + txtSend
+		txtSend = txtSend+"Today is a not your day, \n"
+	if promoCode in 'a':
+		if score2 > 0 :
+			txtSend =  txtSend+"Today is a good day for yor parter "
+		elif score2 == 0:
+			txtSend = txtSend+"Today is a nor good or bad day for yor parter, "
+		else:
+			txtSend = txtSend+"Today is a not yor parter's day, "
 	else:
-		txtSend = "Today is a not yor parter's day, " + txtSend
+		txtSend = "for your parter : [You have no access to this please enter promoCode]"
 
 	return bytes(txtSend, 'ascii')
 
@@ -108,9 +111,9 @@ def threaded1(c,data):
 	c.send(data)
 
 
-def threaded2(c,data):
+def threaded2(c,data,promoCode):
 	#use goodDay
-	data = goodDay(data)
+	data = goodDay(data,promoCode)
 	# send back string to client
 	c.send(data)
 
@@ -143,11 +146,14 @@ def Main():
 
 	# data received from client
 	data = c.recv(1024)
+	promoCode = c.recv(1024)
 	#decode data
 	date = data.decode('ascii')
+	promoCode = promoCode.decode('ascii')
+
 	# Start a new thread and return its identifier
 	t1 = Thread(target=threaded1(c,data))
-	t2 = Thread(target=threaded2(c,data))
+	t2 = Thread(target=threaded2(c,data,promoCode))
 	t3 = Thread(target=threaded3(c,data))
 
 	t1.start()
