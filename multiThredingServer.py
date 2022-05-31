@@ -129,7 +129,7 @@ def Main():
 
 	# reverse a port on your computer
 	# can be anything
-	port = 10045
+	port = 10048
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind((host, port))
 	print("socket binded to port", port)
@@ -153,7 +153,7 @@ def Main():
 
 	# Start a new thread and return its identifier
 	t1 = Thread(target=threaded1(c,data))
-	t2 = Thread(target=threaded2(c,data,promoCode))
+	#t2 = Thread(target=threaded2(c,data,promoCode))
 	t3 = Thread(target=threaded3(c,data))
 
 	t1.start()

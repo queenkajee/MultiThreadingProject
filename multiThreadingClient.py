@@ -12,7 +12,7 @@ def serverTCP(person,promoCode):
 	host = '127.0.0.1'
 
 	# Define the port on which you want to connect
-	port = 10046
+	port = 10048
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	# connect to server on local computer
 	s.connect((host,port))
@@ -25,7 +25,7 @@ def serverTCP(person,promoCode):
 	# message sent to server
 	s.sendall(message.encode('ascii'))
 	s.sendall(promoCode.encode('ascii'))
-	
+
 	# message received from server
 	data1 = s.recv(1024)
 	# print the received message
@@ -57,18 +57,19 @@ def serverTCP(person,promoCode):
 
 def clickButton1(personData,promoCode):
 	personData = str(personData)
-	pomocode = str(promoCode)
-	serverTCP(personData,promocode)
+	promoCode = str(promoCode)
+	serverTCP(personData,promoCode)
 def Main():
 
 	app.geometry("1000x500")
 	app.title("Horo app")
 	instruct1 = tk.Label(app,text="""Plase enter your birthday and then follow by your parter's birthday\n
 	with this form\n0000000000000000\nfirst 8 digit please enter your birthday and follow by yourparter's birthday""")
-	instruct.pack()
+	instruct1.pack()
 	p1 = tk.Entry()
 	p1.pack()
 	instruct2 = tk.Label(app,text="""For enter Promotion code""")
+	instruct2.pack()
 	p2 = tk.Entry()
 	p2.pack()
 	button1 = tk.Button(app, text="Click to proceed",command=lambda:clickButton1(p1.get(),p2.get()))
