@@ -3,19 +3,34 @@ import socket
 #Import GUI module
 import tkinter as tk
 
-
+port = 2000
 
 app = tk.Tk()
+
+def serverTCP1():
+	# local host IP '192.168.0.101'
+	host = '127.0.0.1'
+	# Define the port on which you want to connect
+	port1 = port+1
+	s1 = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+	# connect to server on local computer
+	s1.connect((host,port1))
+	# message received from server
+	data1 = s1.recv(1024)
+	# print the received message
+	serverText1 =data1.decode('ascii')
+	resultsShow1 = tk.Label(app,text=serverText1)
+	resultsShow1.pack()
 
 def serverTCP(person):
 	# local host IP '127.0.0.1'
 	host = '127.0.0.1'
 
 	# Define the port on which you want to connect
-	port = 10046
+	port0 = port
 	s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 	# connect to server on local computer
-	s.connect((host,port))
+	s.connect((host,port0))
 	# message you send to server
 	message = person
 
@@ -55,6 +70,9 @@ def serverTCP(person):
 def clickButton1(personData):
 	personData = str(personData)
 	serverTCP(personData)
+def clickButton2():
+	serverTCP1()
+
 def Main():
 
 	app.geometry("1000x500")
@@ -66,6 +84,8 @@ def Main():
 	p1.pack()
 	button1 = tk.Button(app, text="Click to proceed",command=lambda:clickButton1(p1.get()))
 	button1.pack()
+	button2 = tk.Button(app, text="Click to get promocode and extra content",command=lambda:clickButton2())
+	button2.pack()
 	app.mainloop()
 
 
