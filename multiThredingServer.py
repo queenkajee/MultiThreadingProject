@@ -9,6 +9,21 @@ from multiprocessing.pool import ThreadPool
 #inport date module
 from datetime import datetime
 
+#modify Human data
+def people1(date):
+	first = 0
+	for i in date[0:8] :
+		first += int(i)
+		first = first%10 + first//10
+	return first
+
+def people2(date):
+	second = 0
+	for i in date[8:16] :
+		second += int(i)
+		second = second%10 + second//10
+	return second
+
 def suggestFood(date):
 	sugFood=""
 	food={"fire":"""Recommended foods for the fire day include bitter foods, grains,\n
@@ -49,6 +64,7 @@ def goodDay(date):
 	personDate1 = 0
 	personDate2 = 0
 	datePow = 0
+	#make thread return result by using thread pool
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 	    future1 = executor.submit(people1, date)
 	    future2 = executor.submit(people2,date)
@@ -71,27 +87,13 @@ def goodDay(date):
 		txtSend = "Today is a nor good or bad day for yor parter, " + txtSend
 	else:
 		txtSend = "Today is a not yor parter's day, " + txtSend
-
+	#return today's advise by send them
 	return bytes(txtSend, 'ascii')
 
 
 
-def people1(date):
-	first = 0
-	for i in date[0:8] :
-		first += int(i)
-		first = first%10 + first//10
-	return first
-
-def people2(date):
-	second = 0
-	for i in date[8:16] :
-		second += int(i)
-		second = second%10 + second//10
-	return second
-
-
 def Horar(date) :
+	#make thread return result by using thread pool
 	with concurrent.futures.ThreadPoolExecutor() as executor:
 	    future1 = executor.submit(people1, date)
 	    future2 = executor.submit(people2,date)
